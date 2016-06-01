@@ -58,7 +58,7 @@ p, div {
   z-index: 999;
 }
 .title {
-  padding-top:4%;
+  padding-top:1%;
   padding-bottom:1%;
   color:#fff;
 }
@@ -71,7 +71,7 @@ p, div {
   font-weight: 100;
   font-size: 1em;
   color:#fff;
-  margin-top:5%;
+  margin-top:1%;
 }
 a {
   color:#fff;
@@ -215,12 +215,12 @@ a {
 #updating-chart {
   margin-left:-24%;
   /*margin: 0 auto;*/
-  width: 800px;
-  height: 350px;
+  width: 600px;
+  height: 320px;
 }
 #heart_rate {
   margin-left:-24%;
-  width: 800px;
+  width: 600px;
   margin-top:4%;
   margin-bottom: 25px;
   display:none;
