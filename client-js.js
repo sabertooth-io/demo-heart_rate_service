@@ -56,20 +56,21 @@ $('#connect').on('touchstart click', (event) => {
           },
           scaleFontColor: "#ff0000"
         }
-  (function pulse(back) {
-    $('#heart').animate(
-        {
-            // 'font-size': (back) ? '100px' : '110px',
-            opacity: (back) ? 1 : 0.2
-        }, 950, function(){pulse(!back)});
-  })(false);
+
   // var myLiveChart = new Chart(ctx,{
   //   type: 'line',
   //   data: startingData
   // });
   var myLiveChart = new Chart(ctx).Line(startingData, {animationSteps: 15}, options);
   blue.startNotifications('heart_rate_measurement', e => {
-      $('#heart_rate').show();      
+    (function pulse(back) {
+      $('#heart').animate(
+          {
+              // 'font-size': (back) ? '100px' : '110px',
+              opacity: (back) ? 1 : 0.2
+          }, 950, function(){pulse(!back)});
+    })(false);
+      $('#heart_rate').show();
       $('#bpm-value').text(e.heartRate + ' ');
       myLiveChart.addData([e.heartRate], ++latestLabel);
       // myLiveChart.removeData();
