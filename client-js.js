@@ -82,8 +82,8 @@ $('#connect').on('touchstart click', (event) => {
   blue.startNotifications('heart_rate_measurement', e => {
       console.log('start notify callback',e.heartRate);
       $('#bpm-value').text(e.heartRate + ' ');
-      myLiveChart.addData(e.heartRate, ++latestLabel);
-      // myLiveChart.removeData();
+      myLiveChart.addData([e.heartRate,e.heartRate], ++latestLabel);
+      myLiveChart.removeData();
     })
     .catch(error => {
       console.log(error);
