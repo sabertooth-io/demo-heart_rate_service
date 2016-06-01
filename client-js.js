@@ -83,7 +83,7 @@ $('#connect').on('touchstart click', (event) => {
       console.log('start notify callback',e.heartRate);
       $('#bpm-value').text(e.heartRate + ' ');
       myLiveChart.addData(e.heartRate, ++latestLabel);
-      myLiveChart.removeData();
+      // myLiveChart.removeData();
     })
     .catch(error => {
       console.log(error);
