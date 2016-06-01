@@ -7,32 +7,80 @@ var blue;
 // $(window).load(function() {
 //
 // });
+
 //battery_service
 $('#connect').on('touchstart click', (event) => {
   var services = $('#serviceFilter').val();
   var name = $('#nameFilter').val();
-  var prefix = $('#prefixFilter').val();
+  var prefix = 'P';
   var filterObj = {}
   // moved here to populate from filters rather than on page load
-  filterObj['services'] = ['battery_service'];
+  // filterObj['services'] = ['battery_service'];
   //filterObj['optional_services'] = ['battery_service','carlos_custom_service'];
   if (services) filterObj['services'] = services;
   if (name) filterObj['name'] = name;
   if (prefix) filterObj['namePrefix'] = prefix;
 
-  blue = new Device(filterObj);
+  blue = new BluetoothDevice(filterObj);
+  console.log(blue);
   blue.connect().then(device => {
     $('#load').hide();
     $('#connect').hide();
-    $('#getvalue').show();
-    $('#startNotify').show();
-    $('#stopNotify').show();
-    $('#disconnect').show();
-    $('#status').text('Connected!');
-  }).catch(err => {
-    console.log(err);
-  })
-  console.log(blue);
+    // $('#getvalue').show();
+    // $('#startNotify').show();
+    // $('#stopNotify').show();
+    // $('#disconnect').show();
+    // $('#status').text('Connected!');
+    (function pulse(back) {
+      $('#heart').animate(
+          {
+              // 'font-size': (back) ? '100px' : '110px',
+              opacity: (back) ? 1 : 0.5
+          }, 500, function(){pulse(!back)});
+    })(false);
+
+  var canvas = document.getElementById('updating-chart'),
+      ctx = canvas.getContext('2d'),
+      startingData = {
+        labels: [1, 2, 3, 4, 5, 6, 7],
+        datasets: [
+            {
+                fillColor: "rgba(34, 62, 85, 1)",
+                strokeColor: "rgba(34, 62, 85, 1)",
+                pointColor: "rgba(34, 62, 85, 1)",
+                pointStrokeColor: "rgba(34, 62, 85, 1)",
+                data: [40,60]
+            },
+            {   label: "My Second dataset",
+                fillColor: "rgba(34, 62, 85, 1)",
+                strokeColor: "rgba(151,187,205,1)",
+                pointColor: "rgba(151,187,205,1)",
+                pointStrokeColor: "#fff",
+                data: [90.90]
+            }
+        ]
+      },
+      latestLabel = startingData.labels[6];
+  var options = {
+          legend: {
+            display: true,
+            labels: {
+              fontColor: "rgba(151,187,205,1)"
+            }
+          },
+          scaleFontColor: "#ff0000"
+        }
+
+  var myLiveChart = new Chart(ctx).Line(startingData, {animationSteps: 15}, options);
+
+  blue.startNotifications('heart_rate_measurement', e => {
+      console.log('start notify callback',e.heart_rate_measurement);
+      myLiveChart.addData(e.heart_rate_measurement, ++latestLabel);
+    })
+    .catch(error => {
+      console.log(error);
+    })
+    });
     $('#load').show();
 });
 

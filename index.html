@@ -8,9 +8,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.3/velocity.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.3/velocity.ui.js"></script>
-        <link href='https://fonts.googleapis.com/css?family=Raleway:400,100,200,300,500,600' rel='stylesheet' type='text/css'>
+        <script src="https://use.fontawesome.com/1b85da28ab.js"></script>
         <link rel="stylesheet" href="styles.css">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
       </head>
@@ -21,11 +19,6 @@
             <!-- <h3 class="title">Web Bluetooth</h3> -->
             <!-- <p class="subtitle">A Javascript Library for Bluetooth Low Energy Devices.</p> -->
             <!-- <p class="subtitle">Battery Service Demo</p> -->
-
-            <input type="text" id="serviceFilter" placeholder="service_filter">
-            <input type="text" id="nameFilter" placeholder="name">
-            <input type="text" id="prefixFilter" placeholder="namePrefix">
-            <input type="text" id="characteristic" placeholder="characteristic">
             <div class="buttons">
               <button class="btn connect" id="connect">Connect</button>
               <button class="btn getvalue" id="getvalue">Get Characteristic</button>
@@ -34,19 +27,20 @@
               <button class="btn disconnect" id="disconnect">Disconnect</button>
             </div>
             <h5 id="status"></h5>
-            <h5 id="status-level">Battery Level: <span id="level"></span></h5>
+            <div class="heart_rate">
+              <p id="patient">Patient: Carlos Corral</p>
+              <div id="bpm">
+                <p id="bpm-text"><span id="bpm-value"></span>bpm</p>
+                <i class="fa fa-heart fa-3x" id="heart" aria-hidden="true"></i>
+              </div>
+            </div>
+            <!-- <h5 id="status-level">Battery Level: <span id="level"></span></h5> -->
+            <canvas id="updating-chart"></canvas>
             <div id="load">
               <!-- <img id="loading-indicator" src="assets/loading.gif"> -->
               <div class="spinner"></div>
               <p>Connecting...</p>
               <a href=""><p id="cancel">Cancel</p></a>
-            </div>
-            <div id="battery-parent">
-                <div id="battery-shell">
-                  <img id="charge" src="assets/charge.svg">
-                  <div id="battery-fill">
-                  </div>
-                </div>
             </div>
             <footer class="footer">
               <p>For more information, visit <a href="http://sabertooth-io.github.io/">sabertooth-io.github.io</a></p>
@@ -55,9 +49,12 @@
           </div>
          </div>
       </div>
+      <!-- <script src="Chart.js"></script> -->
+      <script src="//www.chartjs.org/assets/Chart.min.js"></script>
+      <link href='https://fonts.googleapis.com/css?family=Raleway:400,100,200,300,500,600' rel='stylesheet' type='text/css'>
       <script src="errorHandler.js"></script>
+      <script src="bluetoothMap.js"></script>
       <script src="webbluetooth.js"></script>
       <script src="client-js.js"></script>
-      <script src="bluetoothMap.js"></script>
     </body>
   </html>

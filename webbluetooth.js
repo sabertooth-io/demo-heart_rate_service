@@ -41,7 +41,6 @@ class BluetoothDevice {
 	/**
 		* Establishes a new GATT connection w/ the device
 		* 	and stores the return of the promise as this.apiServer
-		*
 	  */
 	connect() {
 		const filters = this.requestParams;
@@ -155,8 +154,9 @@ class BluetoothDevice {
 										for an attempt to readValue() of ${characteristic_name}.`);
 			}
 		// Call returnCharacteristic to retrieve characteristic from which to read
-		// FIXME: Check bound context of 'this' here
-		this.returnCharacteristic(characteristic_name)
+		return new Promise((resolve,reject)=>{
+			return resolve(this.returnCharacteristic(characteristic_name))
+		})
 			.then(characteristic =>{
 				return characteristic.readValue();
 			})
@@ -210,8 +210,9 @@ class BluetoothDevice {
 										for an attempt to writeValue(${value}) to ${characteristic_name}.`);
 			}
 		// Call returnCharacteristic to retrieve characteristic from which to read
-		// FIXME: Check bound context of 'this' here
-		this.returnCharacteristic(characteristic_name)
+		return new Promise((resolve,reject)=>{
+			return resolve(this.returnCharacteristic(characteristic_name))
+		})
 			.then(characteristic => {
 				/**
 				* Check characteristic object to see if prepping method exists. If present,
@@ -266,8 +267,9 @@ class BluetoothDevice {
 										for an attempt to startNotifications() for ${characteristic_name}.`);
 			}
 		// Call returnCharacteristic to retrieve characteristic from which to read
-		// FIXME: Check bound context of 'this' here
-		this.returnCharacteristic(characteristic_name)
+		return new Promise((resolve,reject)=>{
+			return resolve(this.returnCharacteristic(characteristic_name))
+		})
 			.then(characteristic =>{
 				// Start notifications from characteristic and add event listener
 				characteristic.startNotifications()
@@ -322,8 +324,9 @@ class BluetoothDevice {
 			*/
 			if(this.cache[primary_service_name][characteristic_name].notifying) {
 				// Call returnCharacteristic to retrieve characteristic from which to read
-				// FIXME: Check bound context of 'this' here
-				this.returnCharacteristic(characteristic_name)
+				return new Promise((resolve,reject)=>{
+					return resolve(this.returnCharacteristic(characteristic_name))
+				})
 					.then(characteristic =>{
 						characteristic.stopNotifications()
 						.then(() => {
@@ -393,10 +396,8 @@ class BluetoothDevice {
 				console.warn(`Attempting to add ${characteristic_name}. Full support
 											for this characteristic is not provided.`);
 				bluetooth.gattCharacteristicsMapping[characteristic_name] = {
-					characteristic_name: {
-						primaryServices: [primary_service_name],
-						includedProperties: propertiesArr
-					},
+					primaryServices: [primary_service_name],
+					includedProperties: propertiesArr
 				}
 				// FIXME: What do we want to return here?
 				return true;
@@ -429,15 +430,16 @@ class BluetoothDevice {
 			 /**
 				* Check to see if requested characteristic has been cached from a previous
 				* interaction of any type to characteristic_name and return if found
+				* FIXME: clean up if statement conditions... this is sloppy and semantically clunky
 				*/
-			 if (this.cache[primary_service_name][characteristic_name].cachedCharacteristic) {
+			 if (this.cache[primary_service_name] && this.cache[primary_service_name][characteristic_name] && this.cache[primary_service_name][characteristic_name].cachedCharacteristic) {
 					 return this.cache[primary_service_name][characteristic_name].cachedCharacteristic;
 			 }
 			 /**
 				* Check to see if requested characteristic's parent primary service  has
 				* been cached from a any previous interaction with that primary service
 				*/
-			 else if (this.cache[primary_service_name].cachedService) {
+			 else if (this.cache[primary_service_name] && this.cache[primary_service_name].cachedService) {
 					/**
 					* If parent primary service has been cached, use getCharacteristic method
 					* on the cached service and cache resolved characteristic before returning

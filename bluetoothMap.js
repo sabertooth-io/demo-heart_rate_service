@@ -1,6 +1,6 @@
 // export Bluetooth = {
 // FIXME: replace below line with above.
-const Bluetooth = {
+const bluetooth = {
 	gattCharacteristicsMapping: {
 
 		// battery_level characteristic
