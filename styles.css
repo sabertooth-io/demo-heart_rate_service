@@ -238,3 +238,6 @@ a {
   color:#fff;
   float:left;
 }
+#bpm-value {
+  font-size: 2em;
+}
