@@ -225,6 +225,7 @@ a {
   color:#fff;
   text-align:right;
   float:right;
+  display:none;
 }
 #bpm-text {
   float:left;

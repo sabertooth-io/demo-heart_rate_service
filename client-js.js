@@ -31,13 +31,6 @@ $('#connect').on('touchstart click', (event) => {
     // $('#stopNotify').show();
     // $('#disconnect').show();
     // $('#status').text('Connected!');
-    (function pulse(back) {
-      $('#heart').animate(
-          {
-              // 'font-size': (back) ? '100px' : '110px',
-              opacity: (back) ? 1 : 0.5
-          }, 500, function(){pulse(!back)});
-    })(false);
 
   var canvas = document.getElementById('updating-chart'),
       ctx = canvas.getContext('2d'),
@@ -45,18 +38,11 @@ $('#connect').on('touchstart click', (event) => {
         labels: [1, 2, 3, 4, 5, 6, 7],
         datasets: [
             {
-                fillColor: "gba(254, 254, 254, 100)",
-                strokeColor: "gba(254, 254, 254, 100)",
-                pointColor: "gba(254, 254, 254, 100)",
-                pointStrokeColor: "gba(254, 254, 254, 100)",
-                data: [40,60]
-            },
-            {
-                fillColor: "gba(254, 254, 254, 100)",
-                strokeColor: "gba(254, 254, 254, 100)",
-                pointColor: "gba(254, 254, 254, 100)",
+                fillColor: "rgba(254, 254, 254, 100)",
+                strokeColor: "rgba(254, 254, 254, 100)",
+                pointColor: "rgba(254, 254, 254, 100)",
                 pointStrokeColor: "#fff",
-                data: [90.90]
+                data: [55]
             }
         ]
       },
@@ -65,14 +51,13 @@ $('#connect').on('touchstart click', (event) => {
           legend: {
             display: true,
             labels: {
-              fontColor: "rgba(151,187,205,1)"
+              fontColor: "rgba(255,255,255,100)"
             }
           },
           scaleFontColor: "#ff0000"
         }
 
   var myLiveChart = new Chart(ctx).Line(startingData, {animationSteps: 15}, options);
-  console.log(myLiveChart);
 
   // var myLiveChart = new Chart(ctx,{
   //   type: 'line',
@@ -80,9 +65,17 @@ $('#connect').on('touchstart click', (event) => {
   // });
 
   blue.startNotifications('heart_rate_measurement', e => {
-      console.log('start notify callback',e.heartRate);
+      $('#bpm').show();
+      var bpm = 60000 / e.heartRate;
+      (function pulse(back) {
+        $('#heart').animate(
+            {
+                // 'font-size': (back) ? '100px' : '110px',
+                opacity: (back) ? 1 : 0.5
+            }, bpm, function(){pulse(!back)});
+      })(false);
       $('#bpm-value').text(e.heartRate + ' ');
-      myLiveChart.addData([e.heartRate,e.heartRate], ++latestLabel);
+      myLiveChart.addData([e.heartRate], ++latestLabel);
       // myLiveChart.removeData();
     })
     .catch(error => {
