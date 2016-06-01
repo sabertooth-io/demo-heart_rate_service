@@ -118,28 +118,28 @@ const Bluetooth = {
 			includedProperties: ['read']
 		},
 		//glucose_feature characteristic
-		// glucose_feature: {
-		// 	primaryServices: ['glucose'],
-		// 	includedProperties: ['read'],
-		// 	parseValue: value => {
-		// 		value = value.buffer ? value : new DataView(value);
-		// 		let result = {};
-		// 		let flags = value.getUint16(0);
-		// 		let result.low_battery_detection_supported = flags & 0x1;
-		// 		let result.sensor_malfunction_detection_supported = flags & 0x2;
-		// 		let result.sensor_sample_size_supported = flags & 0x4;
-		// 		let result.sensor_strip_insertion_error_detection_supported = flags & 0x8;
-		// 		let result.sensor_strip_type_error_detection_supported = flags & 0x10;
-		// 		let result.sensor_result_highLow_detection_supported = flags & 0x20;
-		// 		let result.sensor_temperature_highLow_detection_supported = flags & 0x40;
-		// 		let result.sensor_read_interruption_detection_supported = flags & 0x80;
-		// 		let result.general_device_fault_supported = flags & 0x100;
-		// 		let result.time_fault_supported = flags & 0x200;
-		// 		let result.multiple_bond_supported = flags & 0x400;
-		// 		// Remaining flags reserved for future use
-		// 		return result;
-		// 	}
-		// },
+		glucose_feature: {
+			primaryServices: ['glucose'],
+			includedProperties: ['read'],
+			parseValue: value => {
+				value = value.buffer ? value : new DataView(value);
+				let result = {};
+				let flags = value.getUint16(0);
+			  result.low_battery_detection_supported = flags & 0x1;
+			  result.sensor_malfunction_detection_supported = flags & 0x2;
+			  result.sensor_sample_size_supported = flags & 0x4;
+			  result.sensor_strip_insertion_error_detection_supported = flags & 0x8;
+			  result.sensor_strip_type_error_detection_supported = flags & 0x10;
+			  result.sensor_result_highLow_detection_supported = flags & 0x20;
+			  result.sensor_temperature_highLow_detection_supported = flags & 0x40;
+			  result.sensor_read_interruption_detection_supported = flags & 0x80;
+			  result.general_device_fault_supported = flags & 0x100;
+			  result.time_fault_supported = flags & 0x200;
+			  result.multiple_bond_supported = flags & 0x400;
+				// Remaining flags reserved for future use
+				return result;
+			}
+		},
 		//http_entity_body characteristic
 		http_entity_body: {
 			primaryServices: ['http_proxy'],
@@ -587,9 +587,9 @@ const Bluetooth = {
 				value = value.buffer ? value : new DataView(value);
 				let result = {};
 				let flags = value.getInt32(0);
-				let result.time_stamp_supported = flags & 0x1;
-				let result.multiple_sensors_supported = flags & 0x2;
-				let result.BMI_supported = flags & 0x4;
+			  result.time_stamp_supported = flags & 0x1;
+			  result.multiple_sensors_supported = flags & 0x2;
+			  result.BMI_supported = flags & 0x4;
 				switch (flags & 0x78 >> 3) {
 					case 0: result.weight_measurement_resolution = 'Not specified';
 					case 1: result.weight_measurement_resolution = 'Resolution of 0.5 kg or 1 lb';
@@ -612,27 +612,27 @@ const Bluetooth = {
 				return result;
 			}
 		},
-		csc_measurement: {
-			primaryServices: ['cycling_speed_and_cadence'],
-			includedProperties: ['notify'],
-			parseValue: value => {
-				value = value.buffer ? value : new DataView(value);
-
-				let flags = value.getUint8(0);
-				let wheelRevolution = flags & 0x1;
-				let crankRevolution = flags & 0x2;
-
-				let index = 1;
-
-				if(wheelRevolution) {
-					result.cumulative_wheel_revolutions =
-				}
-
-				let result = {};
-				result.tx_power_level = value.getInt8(0);
-				return result;
-			}
-		},
+		// csc_measurement: {
+		// 	primaryServices: ['cycling_speed_and_cadence'],
+		// 	includedProperties: ['notify'],
+		// 	parseValue: value => {
+		// 		value = value.buffer ? value : new DataView(value);
+		//
+		// 		let flags = value.getUint8(0);
+		// 		let wheelRevolution = flags & 0x1;
+		// 		let crankRevolution = flags & 0x2;
+		//
+		// 		let index = 1;
+		//
+		// 		if(wheelRevolution) {
+		// 			result.cumulative_wheel_revolutions =
+		// 		}
+		//
+		// 		let result = {};
+		// 		result.tx_power_level = value.getInt8(0);
+		// 		return result;
+		// 	}
+		// },
 	},
 	// all adopted services... passed in as argument to optional services filter
 	gattServiceList: ['alert_notification', 'automation_io', 'battery_service', 'blood_pressure',
