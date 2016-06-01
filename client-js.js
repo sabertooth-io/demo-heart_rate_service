@@ -61,10 +61,9 @@ $('#connect').on('touchstart click', (event) => {
   //   type: 'line',
   //   data: startingData
   // });
-
+  var myLiveChart = new Chart(ctx).Line(startingData, {animationSteps: 15}, options);
   blue.startNotifications('heart_rate_measurement', e => {
       $('#heart_rate').show();
-      var myLiveChart = new Chart(ctx).Line(startingData, {animationSteps: 15}, options);
       var bpm = 60000 / e.heartRate;
       (function pulse(back) {
         $('#heart').animate(
