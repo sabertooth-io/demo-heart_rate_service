@@ -51,7 +51,7 @@ $('#connect').on('touchstart click', (event) => {
                 pointStrokeColor: "rgba(34, 62, 85, 1)",
                 data: [40,60]
             },
-            {   label: "My Second dataset",
+            {   
                 fillColor: "rgba(34, 62, 85, 1)",
                 strokeColor: "rgba(151,187,205,1)",
                 pointColor: "rgba(151,187,205,1)",
@@ -71,7 +71,12 @@ $('#connect').on('touchstart click', (event) => {
           scaleFontColor: "#ff0000"
         }
 
-  var myLiveChart = new Chart(ctx).Line(startingData, {animationSteps: 15}, options);
+  // var myLiveChart = new Chart(ctx).Line(startingData, {animationSteps: 15}, options);
+
+  var myLiveChart = new Chart(ctx,{
+    type: 'line',
+    data: startingData
+  });
 
   blue.startNotifications('heart_rate_measurement', e => {
       console.log('start notify callback',e.heart_rate_measurement);
