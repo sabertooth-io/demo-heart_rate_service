@@ -38,7 +38,7 @@ $('#connect').on('touchstart click', (event) => {
         labels: [1, 2, 3, 4, 5, 6, 7],
         datasets: [
             {
-                fillColor: "rgba(254, 254, 254, 100)",
+                fillColor: "rgba(254, 254, 254, 5)",
                 strokeColor: "rgba(254, 254, 254, 100)",
                 pointColor: "rgba(254, 254, 254, 100)",
                 pointStrokeColor: "#fff",
@@ -71,7 +71,7 @@ $('#connect').on('touchstart click', (event) => {
         $('#heart').animate(
             {
                 // 'font-size': (back) ? '100px' : '110px',
-                opacity: (back) ? 1 : 0.5
+                opacity: (back) ? 1 : 0.2
             }, bpm, function(){pulse(!back)});
       })(false);
       $('#bpm-value').text(e.heartRate + ' ');
