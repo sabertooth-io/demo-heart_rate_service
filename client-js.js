@@ -61,7 +61,7 @@ $('#connect').on('touchstart click', (event) => {
         {
             // 'font-size': (back) ? '100px' : '110px',
             opacity: (back) ? 1 : 0.2
-        }, bpm, function(){pulse(!back)});
+        }, 950, function(){pulse(!back)});
   })(false);
   // var myLiveChart = new Chart(ctx,{
   //   type: 'line',
@@ -69,9 +69,7 @@ $('#connect').on('touchstart click', (event) => {
   // });
   var myLiveChart = new Chart(ctx).Line(startingData, {animationSteps: 15}, options);
   blue.startNotifications('heart_rate_measurement', e => {
-      $('#heart_rate').show();
-      var bpm = 60000 / e.heartRate;
-
+      $('#heart_rate').show();      
       $('#bpm-value').text(e.heartRate + ' ');
       myLiveChart.addData([e.heartRate], ++latestLabel);
       // myLiveChart.removeData();
