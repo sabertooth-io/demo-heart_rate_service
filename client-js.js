@@ -72,6 +72,7 @@ $('#connect').on('touchstart click', (event) => {
         }
 
   var myLiveChart = new Chart(ctx).Line(startingData, {animationSteps: 15}, options);
+  console.log(myLiveChart);
 
   // var myLiveChart = new Chart(ctx,{
   //   type: 'line',
