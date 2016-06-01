@@ -45,16 +45,16 @@ $('#connect').on('touchstart click', (event) => {
         labels: [1, 2, 3, 4, 5, 6, 7],
         datasets: [
             {
-                fillColor: "rgba(34, 62, 85, 1)",
-                strokeColor: "rgba(34, 62, 85, 1)",
-                pointColor: "rgba(34, 62, 85, 1)",
-                pointStrokeColor: "rgba(34, 62, 85, 1)",
+                fillColor: "gba(254, 254, 254, 100)",
+                strokeColor: "gba(254, 254, 254, 100)",
+                pointColor: "gba(254, 254, 254, 100)",
+                pointStrokeColor: "gba(254, 254, 254, 100)",
                 data: [40,60]
             },
             {
-                fillColor: "rgba(34, 62, 85, 1)",
-                strokeColor: "rgba(151,187,205,1)",
-                pointColor: "rgba(151,187,205,1)",
+                fillColor: "gba(254, 254, 254, 100)",
+                strokeColor: "gba(254, 254, 254, 100)",
+                pointColor: "gba(254, 254, 254, 100)",
                 pointStrokeColor: "#fff",
                 data: [90.90]
             }
