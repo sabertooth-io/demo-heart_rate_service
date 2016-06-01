@@ -38,7 +38,7 @@ $('#connect').on('touchstart click', (event) => {
         labels: [1, 2, 3, 4, 5, 6, 7],
         datasets: [
             {
-                fillColor: "rgba(254, 254, 254, 5)",
+                fillColor: "rgba(254, 254, 254, 0.5)",
                 strokeColor: "rgba(254, 254, 254, 100)",
                 pointColor: "rgba(254, 254, 254, 100)",
                 pointStrokeColor: "#fff",
