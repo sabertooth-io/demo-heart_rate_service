@@ -65,7 +65,7 @@ $('#connect').on('touchstart click', (event) => {
   // });
 
   blue.startNotifications('heart_rate_measurement', e => {
-      $('#bpm').show();
+      $('#heart_rate').show();
       var bpm = 60000 / e.heartRate;
       (function pulse(back) {
         $('#heart').animate(
