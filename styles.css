@@ -58,7 +58,8 @@ p, div {
   z-index: 999;
 }
 .title {
-  padding-top:7%;
+  padding-top:4%;
+  padding-bottom:1%;
   color:#fff;
 }
 
@@ -220,7 +221,7 @@ a {
 #heart_rate {
   margin-left:-24%;
   width: 800px;
-  margin-top:10%;
+  margin-top:4%;
   margin-bottom: 25px;
   display:none;
 }
