@@ -1,4 +1,4 @@
-const BluetoothDevice = require('web-bluetooth');
+const BluetoothDevice = require('web-bluetooth-test');
 
 /*
 * We set up our bluetooth device variable that'll be used to initialize a bluetooth device object.
