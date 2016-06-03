@@ -1,85 +1,78 @@
 body {
-    background: #223E55 !important;
-    -webkit-transition: opacity 1s ease-in;
-    transition: opacity 1s ease-in;
+  background: #223E55 !important;
+  -webkit-transition: opacity 1s ease-in;
+  transition: opacity 1s ease-in;
 }
-
 h1, h2, h3, h4, h5, h6 {
-    font-family: 'Raleway';
+  font-family: 'Raleway';
 }
 p, div {
-    font-family: 'Raleway';
+  font-family: 'Raleway';
 }
-
 #battery-parent {
-  margin-top:8%;
-  margin-bottom:6%;
+  margin-top: 8%;
+  margin-bottom: 6%;
 }
-
 #battery-shell {
-  margin:auto;
-  background-color:#eee;
-  width:150px;
-  height:250px;
-  border-radius:8px;
+  margin: auto;
+  background-color: #eee;
+  width: 150px;
+  height: 250px;
+  border-radius: 8px;
   position: relative;
   box-shadow: 0 14px 24px 8px rgba(0, 0, 0, .30);
 }
-
 #battery-shell:before {
-  content:'';
-  margin-top:-17px;
-  left:24%;
-  position:absolute;
-  display:block;
-  width:80px;
-  height:40%;
-  border-radius:8px;
-  background-color:#eee;
+  content: '';
+  margin-top: -17px;
+  left: 24%;
+  position: absolute;
+  display: block;
+  width: 80px;
+  height: 40%;
+  border-radius: 8px;
+  background-color: #eee;
 }
 #battery-fill {
   position: absolute;
-  width:150px;
-  height:0%;
-  bottom:0px;
-  border-radius:8px;
-  background-color:#6FEA08;
-  box-shadow:  0 0 10px rgba(255,255,255,1) , 0 0 20px rgba(255,255,255,1) , 0 0 30px rgba(255,255,255,1) , 0 0 40px #6FEA08 , 0 0 70px #6FEA08 , 0 0 80px #6FEA08 , 0 0 100px #ff00de ;
+  width: 150px;
+  height: 0%;
+  bottom: 0px;
+  border-radius: 8px;
+  background-color: #6FEA08;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 1), 0 0 20px rgba(255, 255, 255, 1), 0 0 30px rgba(255, 255, 255, 1), 0 0 40px #6FEA08, 0 0 70px #6FEA08, 0 0 80px #6FEA08, 0 0 100px #ff00de;
 }
-
 #battery-level {
-  margin-top:100%;
+  margin-top: 100%;
 }
 #charge {
   position: absolute;
-  width:80px;
-  margin:-28%;
-  margin-top:47%;
+  width: 80px;
+  margin: -28%;
+  margin-top: 47%;
   z-index: 999;
 }
 .title {
-  padding-top:1%;
-  padding-bottom:1%;
-  color:#fff;
+  padding-top: 1%;
+  padding-bottom: 1%;
+  color: #fff;
 }
-
 .subtitle {
-    color:#fff;
+  color: #fff;
 }
-
 .footer {
   font-weight: 100;
   font-size: 1em;
-  color:#fff;
-  margin-top:1%;
+  color: #fff;
+  margin-top: 1%;
 }
 a {
-  color:#fff;
+  color: #fff;
 }
 #load {
   margin-top: 30px;
-  display:none;
-  color:#fff;
+  display: none;
+  color: #fff;
 }
 #loading-indicator {
   width: 50px;
@@ -90,26 +83,31 @@ a {
   width: 40px;
   height: 40px;
   background-color: #fff;
-
   margin: 100px auto;
   -webkit-animation: sk-rotateplane 1.2s infinite ease-in-out;
   animation: sk-rotateplane 1.2s infinite ease-in-out;
 }
-
 @-webkit-keyframes sk-rotateplane {
-  0% { -webkit-transform: perspective(120px) }
-  50% { -webkit-transform: perspective(120px) rotateY(180deg) }
-  100% { -webkit-transform: perspective(120px) rotateY(180deg)  rotateX(180deg) }
+  0% {
+    -webkit-transform: perspective(120px)
+  }
+  50% {
+    -webkit-transform: perspective(120px) rotateY(180deg)
+  }
+  100% {
+    -webkit-transform: perspective(120px) rotateY(180deg) rotateX(180deg)
+  }
 }
-
 @keyframes sk-rotateplane {
   0% {
     transform: perspective(120px) rotateX(0deg) rotateY(0deg);
     -webkit-transform: perspective(120px) rotateX(0deg) rotateY(0deg)
-  } 50% {
+  }
+  50% {
     transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
     -webkit-transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg)
-  } 100% {
+  }
+  100% {
     transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
     -webkit-transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
   }
@@ -129,118 +127,76 @@ a {
   color: white;
   background: #eee;
 }
-.btn:focus,.btn:active {
-   outline: none !important;
+.btn:focus, .btn:active {
+  outline: none !important;
 }
 #getvalue {
-  color:#fff;
+  color: #fff;
   background: blue;
-  display:none;
+  display: none;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, .20);
 }
 #startNotify {
   color: royalblue;
   background: #e7e7e7;
-  display:none;
+  display: none;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, .20);
 }
 #stopNotify {
   color: royalblue;
   background: #e9e9e9;
-  display:none;
+  display: none;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, .20);
 }
 #disconnect {
-  color:#fff;
+  color: #fff;
   background: red;
-  display:none;
+  display: none;
 }
 .btnDisconnect:hover {
   color: white;
   background: #1abc9c;
 }
-.btnDisconnect:focus,.btn:active {
-   outline: none !important;
+.btnDisconnect:focus, .btn:active {
+  outline: none !important;
 }
 #status {
-  padding:10px;
-  color:#fff;
+  padding: 10px;
+  color: #fff;
 }
 #status-level {
-  padding:4px;
-  color:#fff;
+  padding: 4px;
+  color: #fff;
 }
-
-/*#heart {
-    position: relative;
-    width: 100px;
-    height: 90px;
-}
-#heart:before,
-#heart:after {
-    position: absolute;
-    content: "";
-    left: 50px;
-    top: 0;
-    width: 50px;
-    height: 80px;
-    background: red;
-    -moz-border-radius: 50px 50px 0 0;
-    border-radius: 50px 50px 0 0;
-    -webkit-transform: rotate(-45deg);
-       -moz-transform: rotate(-45deg);
-        -ms-transform: rotate(-45deg);
-         -o-transform: rotate(-45deg);
-            transform: rotate(-45deg);
-    -webkit-transform-origin: 0 100%;
-       -moz-transform-origin: 0 100%;
-        -ms-transform-origin: 0 100%;
-         -o-transform-origin: 0 100%;
-            transform-origin: 0 100%;
-}
-#heart:after {
-    left: 0;
-    -webkit-transform: rotate(45deg);
-       -moz-transform: rotate(45deg);
-        -ms-transform: rotate(45deg);
-         -o-transform: rotate(45deg);
-            transform: rotate(45deg);
-    -webkit-transform-origin: 100% 100%;
-       -moz-transform-origin: 100% 100%;
-        -ms-transform-origin: 100% 100%;
-         -o-transform-origin: 100% 100%;
-            transform-origin :100% 100%;
-}*/
-
 #updating-chart {
-  margin-left:-16%;
+  margin-left: -16%;
   /*margin: 0 auto;*/
   width: 600px;
   height: 320px;
 }
 #heart_rate {
-  margin-left:-16%;
+  margin-left: -16%;
   width: 600px;
-  margin-top:4%;
+  margin-top: 4%;
   margin-bottom: 25px;
-  display:none;
+  display: none;
 }
 #bpm {
-  color:#fff;
-  text-align:right;
-  float:right;
+  color: #fff;
+  text-align: right;
+  float: right;
 }
 #bpm-text {
-  float:left;
+  float: left;
   padding-right: 10px;
 }
 .fa-heart {
-  line-height:20px;
+  line-height: 20px;
   color: #fff;
 }
 #patient {
-  color:#fff;
-  float:left;
+  color: #fff;
+  float: left;
 }
 #bpm-value {
   font-size: 2em;

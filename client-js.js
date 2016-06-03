@@ -1,144 +1,108 @@
-// const Device = require('bluetooth.js');
+const BluetoothDevice = require('web-bluetooth');
 
-var percentage = 30;
-// removed value assignment from blue at variable declaration
+/*
+* We set up our bluetooth device variable that'll be used to initialize a bluetooth device object.
+*/
 var blue;
 
-// $(window).load(function() {
-//
-// });
-
-//battery_service
+/**
+* The below callback function handles connecting to a device when a user clicks on a the connect button.
+* We initiate the device with the user provided name or namePrefix required to request and connect to
+* a Bluetooth Low Energy device.
+*
+* After the device is initialized by calling the 'new Device' method, we call the '.connect()' method.
+* The connect method requests the device and connects to it.
+*/
 $('#connect').on('touchstart click', (event) => {
   var services = $('#serviceFilter').val();
   var name = $('#nameFilter').val();
   var prefix = 'P';
   var filterObj = {}
-  // moved here to populate from filters rather than on page load
-  // filterObj['services'] = ['battery_service'];
-  //filterObj['optional_services'] = ['battery_service','carlos_custom_service'];
   if (services) filterObj['services'] = services;
   if (name) filterObj['name'] = name;
   if (prefix) filterObj['namePrefix'] = prefix;
 
   blue = new BluetoothDevice(filterObj);
-  console.log(blue);
+
   blue.connect().then(device => {
     $('#load').hide();
     $('#connect').hide();
-    // $('#getvalue').show();
-    // $('#startNotify').show();
-    // $('#stopNotify').show();
-    // $('#disconnect').show();
-    // $('#status').text('Connected!');
 
-  var canvas = document.getElementById('updating-chart'),
+    var canvas = document.getElementById('updating-chart'),
       ctx = canvas.getContext('2d'),
       startingData = {
         labels: [1, 2, 3, 4, 5, 6, 7],
-        datasets: [
-            {
-                fillColor: "rgba(254, 254, 254, 0.5)",
-                strokeColor: "rgba(254, 254, 254, 100)",
-                pointColor: "rgba(254, 254, 254, 100)",
-                pointStrokeColor: "#fff",
-                data: [55]
-            }
-        ]
+        datasets: [{
+          fillColor: "rgba(254, 254, 254, 0.5)",
+          strokeColor: "rgba(254, 254, 254, 100)",
+          pointColor: "rgba(254, 254, 254, 100)",
+          pointStrokeColor: "#fff",
+          data: [55]
+        }]
       },
       latestLabel = startingData.labels[6];
-  var options = {
-          legend: {
-            display: true,
-            labels: {
-              fontColor: "rgba(255,255,255,100)"
-            }
-          },
-          scaleFontColor: "#ff0000"
+    var options = {
+      legend: {
+        display: true,
+        labels: {
+          fontColor: "rgba(255,255,255,100)"
         }
-
-  // var myLiveChart = new Chart(ctx,{
-  //   type: 'line',
-  //   data: startingData
-  // });
-  var myLiveChart = new Chart(ctx).Line(startingData, {animationSteps: 15}, options);
-  blue.startNotifications('heart_rate_measurement', e => {
-    (function pulse(back) {
-      $('#heart').animate(
-          {
-              // 'font-size': (back) ? '100px' : '110px',
-              opacity: (back) ? 1 : 0.2
-          }, 950, function(){pulse(!back)});
-    })(false);
-      $('#heart_rate').show();
-      $('#bpm-value').text(e.heartRate + ' ');
-      myLiveChart.addData([e.heartRate], ++latestLabel);
-      // myLiveChart.removeData();
-    })
-    .catch(error => {
-      console.log(error);
-    })
-    });
-    $('#load').show();
-});
-
-$('#disconnect').on('touchstart click', (event) => {
-    if (blue.disconnect()) {
-      $('#status').text('Disconnected!');
-      $('#connect').show();
-      $('#disconnect').hide();
-      $('#getvalue').hide();
-      $('#startNotify').hide();
-      $('#stopNotify').hide();
+      },
+      scaleFontColor: "#ff0000"
     }
-    else {
-      $('#status').text('Disconnect failed!');
-    }
-});
 
-$('#getvalue').on('touchstart click', (event) => {
-  var characteristic = $('#characteristic').val();
-  console.log(characteristic);
-  blue.getValue(characteristic)
-  .then(value => {
-    $('#level').text(`${value}%`);
-    //percentage = value;
-    batteryFill(value);
-  })
-  .catch(error => {
-    console.log(error);
-  })
-});
+    var myLiveChart = new Chart(ctx).Line(startingData, {
+      animationSteps: 15
+    }, options);
 
-$('#startNotify').on('touchstart click', (event) => {
-  var characteristic = $('#characteristic').val();
-  blue.startNotifications(characteristic, e => {
-    console.log('start notify callback');
-    var newHR = parseHeartRate(e.target.value);
-    $('#level').append(`<p>${newHR.heartRate}</p>`);
-  })
-  // .then(value => {
-  //   console.log('in returned promise...')
-
-    // value.addEventListener('characteristicvaluechanged', event =>{
-    //   var newHR = parseHeartRate(event.target.value);
-    //   console.log('newHR: ', newHR);
-    //   $('#level').append(`<p>${newHR.heartRate}</p>`);
-    // });
-  // })
-  .catch(error => {
-    console.log(error);
-  })
-});
-
-$('#stopNotify').on('touchstart click', (event) => {
-  var characteristic = $('#characteristic').val();
-  blue.stopNotifications(characteristic).then(() => {
-    console.log('in client-js2, stopped notifications');
+    /**
+    * The below function handles starting a stream of data notifications from a device with the 'notify' property.
+    * In this demo example, we pass in 'heart_rate_measurement', one of the adopted services to the 'startNotifications()' method.
+    * The startNotifications() method will do the heavy lifting to read the value from the device, parse the array buffer that's
+    * returned from the device and send back a value stored on an object. The object returned by the startNotifications()
+    * method stores two things: 1. parsed value and 2. the original value (allows developers to parse as they need to).
+    */
+    blue.startNotifications('heart_rate_measurement', e => {
+        (function pulse(back) {
+          $('#heart').animate({
+            opacity: (back) ? 1 : 0.2
+          }, 950, function() {
+            pulse(!back)
+          });
+        })(false);
+        $('#heart_rate').show();
+        $('#bpm-value').text(e.heartRate + ' ');
+        myLiveChart.addData([e.heartRate], ++latestLabel);
+      })
+      .catch(error => {
+        console.log(error);
+      })
   });
+  $('#load').show();
 });
 
-//TODO: handling for disconnect
+/**
+* The below callback function handles disconnecting from the device by calling the 'disconnect()' method.
+* disconnect() returns a Boolean indicating whether disconnecting was successful or not.
+*/
+$('#disconnect').on('touchstart click', (event) => {
+  if (blue.disconnect()) {
+    $('#status').text('Disconnected!');
+    $('#connect').show();
+    $('#disconnect').hide();
+    $('#getvalue').hide();
+    $('#startNotify').hide();
+    $('#stopNotify').hide();
+  } else {
+    $('#status').text('Disconnect failed!');
+  }
+});
+
+/**
+* The below callback function handles cancelling the request from the device by calling the 'disconnect()' method.
+* disconnect() returns a Boolean indicating whether disconnecting was successful or not.
+* A user can also cancel connecting via the browser provided controls.
+*/
 $('#cancel').on('click', event => {
   event.preventDefault();
   $('#load').hide();
@@ -146,64 +110,3 @@ $('#cancel').on('click', event => {
   $('#disconnect').hide();
   if (blue.disconnect()) $('#status').text('Not connected');
 });
-
-// $('#disconnect');
-
-
-function batteryFill(percentage) {
-  $('#battery-fill').velocity({
-    height: `${percentage}%`
-  },{
-    duration:1000,
-    easing:'linear'
-  });
-  // $('#battery-fill').addClass('battery-transition');
-}
-
-
-// Francios parser... need to add to gattCharacteristicsMapping object
-function parseHeartRate(value) {
-  // In Chrome 50+, a DataView is returned instead of an ArrayBuffer.
-  //console.log('value: ', value);
-  //console.log(value);
-  //console.log('valueStr: ', JSON.stringify(value))
-  value = value.buffer ? value : new DataView(value);
-  console.log('Value from DataView: ',value);
-  let flags = value.getUint8(0);
-  //console.log('flags: ', flags);
-  let rate16Bits = flags & 0x1;
-  //console.log('rate16Bits: ', rate16Bits);
-  let result = {};
-  let index = 1;
-  if (rate16Bits) {
-    result.heartRate = value.getUint16(index, /*littleEndian=*/true);
-    index += 2;
-  } else {
-    result.heartRate = value.getUint8(index);
-    index += 1;
-  }
-  let contactDetected = flags & 0x2;
-  //console.log('contactDetected: ', contactDetected);
-  let contactSensorPresent = flags & 0x4;
-  //console.log('contactSensorPresent: ', contactSensorPresent);
-  if (contactSensorPresent) {
-    result.contactDetected = !!contactDetected;
-  }
-  let energyPresent = flags & 0x8;
-  //console.log('energyPresent: ', energyPresent);
-  if (energyPresent) {
-    result.energyExpended = value.getUint16(index, /*littleEndian=*/true);
-    index += 2;
-  }
-  let rrIntervalPresent = flags & 0x10;
-  //console.log('rrIntervalPresent: ', rrIntervalPresent);
-  if (rrIntervalPresent) {
-    let rrIntervals = [];
-    for (; index + 1 < value.byteLength; index += 2) {
-      rrIntervals.push(value.getUint16(index, /*littleEndian=*/true));
-    }
-    result.rrIntervals = rrIntervals;
-  }
-  console.log('parsed result: ',result);
-  return result;
-}

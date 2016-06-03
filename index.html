@@ -1,60 +1,57 @@
 <DOCTYPE html>
   <html>
+  <meta charset="utf-8">
+
+  <head>
     <meta charset="utf-8">
-    <head>
-        <meta charset="utf-8">
-        <title>Battery Service</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
-        <script src="https://use.fontawesome.com/1b85da28ab.js"></script>
-        <link rel="stylesheet" href="styles.css">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-      </head>
-    <body class="loading">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-6 col-lg-offset-3 text-center">
-            <h4 class="title">Heart Rate Monitor</h4>
-            <!-- <p class="subtitle">A Javascript Library for Bluetooth Low Energy Devices.</p> -->
-            <!-- <p class="subtitle">Battery Service Demo</p> -->
-            <div class="buttons">
-              <button class="btn connect" id="connect">Connect</button>
-              <button class="btn getvalue" id="getvalue">Get Characteristic</button>
-              <button class="btn startNotify" id="startNotify">Start Notifications</button>
-              <button class="btn stopNotify" id="stopNotify">Stop Notifications</button>
-              <button class="btn disconnect" id="disconnect">Disconnect</button>
-            </div>
-            <h5 id="status"></h5>
-            <div id="heart_rate">
-              <p id="patient">Patient: Aaron Peltz</p>
-              <div id="bpm">
-                <p id="bpm-text"><span id="bpm-value"></span>bpm</p>
-                <i class="fa fa-heart fa-3x" id="heart" aria-hidden="true"></i>
-              </div>
-            </div>
-            <!-- <h5 id="status-level">Battery Level: <span id="level"></span></h5> -->
-            <div id="load">
-              <!-- <img id="loading-indicator" src="assets/loading.gif"> -->
-              <div class="spinner"></div>
-              <p>Connecting...</p>
-              <a href=""><p id="cancel">Cancel</p></a>
-            </div>
-            <canvas id="updating-chart"></canvas>
-            <footer class="footer">
-              <p>For more information, visit <a href="http://sabertooth-io.github.io/">sabertooth-io.github.io</a></p>
-              <p><a href="">View demo on GitHub</a></p>
-            </footer>
+    <title>Web-Bluetooth - Heart Rate Service Demo</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.3/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+    <script src="https://use.fontawesome.com/1b85da28ab.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+
+  <body class="loading">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 col-lg-offset-3 text-center">
+          <h4 class="title">Web-Bluetooth - Heart Rate Monitor Demo</h4>
+          <div class="buttons">
+            <button class="btn connect" id="connect">Connect</button>
           </div>
-         </div>
+          <h5 id="status"></h5>
+          <div id="heart_rate">
+            <p id="patient">Patient: Aaron Peltz</p>
+            <div id="bpm">
+              <p id="bpm-text"><span id="bpm-value"></span>bpm</p>
+              <i class="fa fa-heart fa-3x" id="heart" aria-hidden="true"></i>
+            </div>
+          </div>
+          <div id="load">
+            <div class="spinner"></div>
+            <p>Connecting...</p>
+            <a href="">
+              <p id="cancel">Cancel</p>
+            </a>
+          </div>
+          <canvas id="updating-chart"></canvas>
+          <footer class="footer">
+            <p>For more information, visit <a href="http://sabertooth-io.github.io/">sabertooth-io.github.io</a></p>
+            <p><a href="https://github.com/sabertooth-io">View demo on GitHub</a></p>
+          </footer>
+        </div>
       </div>
-      <script src="Chart.js"></script>
-      <!-- <script src="http://www.chartjs.org/assets/Chart.min.js"></script> -->
-      <link href='https://fonts.googleapis.com/css?family=Raleway:400,100,200,300,500,600' rel='stylesheet' type='text/css'>
-      <script src="errorHandler.js"></script>
-      <script src="bluetoothMap.js"></script>
-      <script src="webbluetooth.js"></script>
-      <script src="client-js.js"></script>
-    </body>
+    </div>
+    <script src="Chart.js"></script>
+    <link href='https://fonts.googleapis.com/css?family=Raleway:400,100,200,300,500,600' rel='stylesheet' type='text/css'>
+    <!-- <script src="errorHandler.js"></script>
+    <script src="bluetoothMap.js"></script>
+    <script src="webbluetooth.js"></script>
+    <script src="client-js.js"></script> -->
+    <script src="bundle.js"></script>
+  </body>
+
   </html>
