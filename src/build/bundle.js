@@ -1,124 +1,6 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 'use strict';
 
-/*
-* We require in the web-bluetooth library.
-*/
-var BluetoothDevice = require('web-bluetooth');
-
-/*
-* We set up our bluetooth device variable that'll be used to initialize a bluetooth device object.
-*/
-var blue;
-
-/**
-* The below callback function handles connecting to a device when a user clicks on a the connect button.
-* We initiate the device with the user provided name or namePrefix required to request and connect to
-* a Bluetooth Low Energy device.
-*
-* After the device is initialized by calling the 'new Device' method, we call the '.connect()' method.
-* The connect method requests the device and connects to it.
-*/
-$('#connect').on('touchstart click', function (event) {
-  var services = $('#serviceFilter').val();
-  var name = $('#nameFilter').val();
-  var prefix = 'P';
-  var filterObj = {};
-  if (services) filterObj['services'] = services;
-  if (name) filterObj['name'] = name;
-  if (prefix) filterObj['namePrefix'] = prefix;
-
-  blue = new BluetoothDevice(filterObj);
-
-  blue.connect().then(function (device) {
-    $('#load').hide();
-    $('#connect').hide();
-
-    var canvas = document.getElementById('updating-chart'),
-        ctx = canvas.getContext('2d'),
-        startingData = {
-      labels: [1, 2, 3, 4, 5, 6, 7],
-      datasets: [{
-        fillColor: "rgba(254, 254, 254, 0.5)",
-        strokeColor: "rgba(254, 254, 254, 100)",
-        pointColor: "rgba(254, 254, 254, 100)",
-        pointStrokeColor: "#fff",
-        data: [55]
-      }]
-    },
-        latestLabel = startingData.labels[6];
-    var options = {
-      legend: {
-        display: true,
-        labels: {
-          fontColor: "rgba(255,255,255,100)"
-        }
-      },
-      scaleFontColor: "#ff0000"
-    };
-
-    var myLiveChart = new Chart(ctx).Line(startingData, {
-      animationSteps: 15
-    }, options);
-
-    /**
-    * The below function handles starting a stream of data notifications from a device with the 'notify' property.
-    * In this demo example, we pass in 'heart_rate_measurement', one of the adopted services to the 'startNotifications()' method.
-    * The startNotifications() method will do the heavy lifting to read the value from the device, parse the array buffer that's
-    * returned from the device and send back a value stored on an object. The object returned by the startNotifications()
-    * method stores two things: 1. parsed value and 2. the original value (allows developers to parse as they need to).
-    */
-    blue.startNotifications('heart_rate_measurement', function (e) {
-      (function pulse(back) {
-        $('#heart').animate({
-          opacity: back ? 1 : 0.2
-        }, 950, function () {
-          pulse(!back);
-        });
-      })(false);
-      $('#heart_rate').show();
-      $('#bpm-value').text(e.heartRate + ' ');
-      myLiveChart.addData([e.heartRate], ++latestLabel);
-    }).catch(function (error) {
-      console.log(error);
-    });
-  });
-  $('#load').show();
-});
-
-/**
-* The below callback function handles disconnecting from the device by calling the 'disconnect()' method.
-* disconnect() returns a Boolean indicating whether disconnecting was successful or not.
-*/
-$('#disconnect').on('touchstart click', function (event) {
-  if (blue.disconnect()) {
-    $('#status').text('Disconnected!');
-    $('#connect').show();
-    $('#disconnect').hide();
-    $('#getvalue').hide();
-    $('#startNotify').hide();
-    $('#stopNotify').hide();
-  } else {
-    $('#status').text('Disconnect failed!');
-  }
-});
-
-/**
-* The below callback function handles cancelling the request from the device by calling the 'disconnect()' method.
-* disconnect() returns a Boolean indicating whether disconnecting was successful or not.
-* A user can also cancel connecting via the browser provided controls.
-*/
-$('#cancel').on('click', function (event) {
-  event.preventDefault();
-  $('#load').hide();
-  $('#connect').show();
-  $('#disconnect').hide();
-  if (blue.disconnect()) $('#status').text('Not connected');
-});
-
-},{"web-bluetooth":5}],2:[function(require,module,exports){
-'use strict';
-
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -477,7 +359,7 @@ var BluetoothDevice = function () {
 }();
 
 module.exports = BluetoothDevice;
-},{"./bluetoothMap":3,"./errorHandler":4}],3:[function(require,module,exports){
+},{"./bluetoothMap":2,"./errorHandler":3}],2:[function(require,module,exports){
 'use strict';
 
 var bluetoothMap = {
@@ -1251,7 +1133,7 @@ var bluetoothMap = {
 };
 
 module.exports = bluetoothMap;
-},{}],4:[function(require,module,exports){
+},{}],3:[function(require,module,exports){
 "use strict";
 
 /** errorHandler - Consolodates error message configuration and logic
@@ -1299,7 +1181,125 @@ function errorHandler(errorKey, nativeError, alternate) {
 }
 
 module.exports = errorHandler;
-},{}],5:[function(require,module,exports){
+},{}],4:[function(require,module,exports){
 module.exports = require('./dist/BluetoothDevice');
 
-},{"./dist/BluetoothDevice":2}]},{},[1]);
+},{"./dist/BluetoothDevice":1}],5:[function(require,module,exports){
+'use strict';
+
+/*
+* We require in the web-bluetooth library.
+*/
+var BluetoothDevice = require('web-bluetooth');
+
+/*
+* We set up our bluetooth device variable that'll be used to initialize a bluetooth device object.
+*/
+var blue;
+
+/**
+* The below callback function handles connecting to a device when a user clicks on a the connect button.
+* We initiate the device with the user provided name or namePrefix required to request and connect to
+* a Bluetooth Low Energy device.
+*
+* After the device is initialized by calling the 'new Device' method, we call the '.connect()' method.
+* The connect method requests the device and connects to it.
+*/
+$('#connect').on('touchstart click', function (event) {
+  var services = $('#serviceFilter').val();
+  var name = $('#nameFilter').val();
+  var prefix = 'P';
+  var filterObj = {};
+  if (services) filterObj['services'] = services;
+  if (name) filterObj['name'] = name;
+  if (prefix) filterObj['namePrefix'] = prefix;
+
+  blue = new BluetoothDevice(filterObj);
+
+  blue.connect().then(function (device) {
+    $('#load').hide();
+    $('#connect').hide();
+
+    var canvas = document.getElementById('updating-chart'),
+        ctx = canvas.getContext('2d'),
+        startingData = {
+      labels: [1, 2, 3, 4, 5, 6, 7],
+      datasets: [{
+        fillColor: "rgba(254, 254, 254, 0.5)",
+        strokeColor: "rgba(254, 254, 254, 100)",
+        pointColor: "rgba(254, 254, 254, 100)",
+        pointStrokeColor: "#fff",
+        data: [55]
+      }]
+    },
+        latestLabel = startingData.labels[6];
+    var options = {
+      legend: {
+        display: true,
+        labels: {
+          fontColor: "rgba(255,255,255,100)"
+        }
+      },
+      scaleFontColor: "#ff0000"
+    };
+
+    var myLiveChart = new Chart(ctx).Line(startingData, {
+      animationSteps: 15
+    }, options);
+
+    /**
+    * The below function handles starting a stream of data notifications from a device with the 'notify' property.
+    * In this demo example, we pass in 'heart_rate_measurement', one of the adopted services to the 'startNotifications()' method.
+    * The startNotifications() method will do the heavy lifting to read the value from the device, parse the array buffer that's
+    * returned from the device and send back a value stored on an object. The object returned by the startNotifications()
+    * method stores two things: 1. parsed value and 2. the original value (allows developers to parse as they need to).
+    */
+    blue.startNotifications('heart_rate_measurement', function (e) {
+      (function pulse(back) {
+        $('#heart').animate({
+          opacity: back ? 1 : 0.2
+        }, 950, function () {
+          pulse(!back);
+        });
+      })(false);
+      $('#heart_rate').show();
+      $('#bpm-value').text(e.heartRate + ' ');
+      myLiveChart.addData([e.heartRate], ++latestLabel);
+    }).catch(function (error) {
+      console.log(error);
+    });
+  });
+  $('#load').show();
+});
+
+/**
+* The below callback function handles disconnecting from the device by calling the 'disconnect()' method.
+* disconnect() returns a Boolean indicating whether disconnecting was successful or not.
+*/
+$('#disconnect').on('touchstart click', function (event) {
+  if (blue.disconnect()) {
+    $('#status').text('Disconnected!');
+    $('#connect').show();
+    $('#disconnect').hide();
+    $('#getvalue').hide();
+    $('#startNotify').hide();
+    $('#stopNotify').hide();
+  } else {
+    $('#status').text('Disconnect failed!');
+  }
+});
+
+/**
+* The below callback function handles cancelling the request from the device by calling the 'disconnect()' method.
+* disconnect() returns a Boolean indicating whether disconnecting was successful or not.
+* A user can also cancel connecting via the browser provided controls.
+*/
+$('#cancel').on('click', function (event) {
+  event.preventDefault();
+  $('#load').hide();
+  $('#connect').show();
+  $('#disconnect').hide();
+  if (blue.disconnect()) $('#status').text('Not connected');
+});
+
+},{"web-bluetooth":4}]},{},[5]);

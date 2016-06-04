@@ -6,9 +6,9 @@ This simple demo uses the Web-Bluetooth library to connect to a device broadcast
 
 #### Requirements
 ------------
-Chrome 45+, behind an experimental flag. Go to `chrome://flags/#enable-web-bluetooth` to enable the flag. Restart Chrome and you should be good to go.
+Web-Bluetooth is behind an experimental flag in Chrome 45+. Go to `chrome://flags/#enable-web-bluetooth` to enable the flag. Restart Chrome and you should be good to go.
 
-Chrome on the following devices will allow you to experiment with web-bluetooth.
+Experiment with web-bluetooth on the following devices.
   * Linux      
   * ChromeOS
   * Android
@@ -21,7 +21,7 @@ First, fork this repo and then run:
 
 ```
 $ npm install
-$ npm start
+$ npm run demo
 $ open http://localhost:3000
 ```
 #### Use
